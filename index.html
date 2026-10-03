@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#ff7eb6">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>PokéTea Shop</title>
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header class="topbar">
+    <div>
+      <div class="brand">🧋 PokéTea Shop</div>
+      <div id="levelText">Lv. 1 • EXP 0/100</div>
+    </div>
+    <div class="wallet">💰 <span id="money">300</span></div>
+  </header>
+
+  <main>
+    <section id="shopScreen" class="screen active">
+      <div class="hero-card">
+        <div class="shop-art">🧋</div>
+        <div>
+          <h1 id="shopName">Tiệm Trà Sữa Lá Non</h1>
+          <p id="shopSubtitle">Hôm nay mình sẽ bán thật nhiều trà sữa!</p>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat"><span>⭐ EXP</span><b id="expText">0</b></div>
+        <div class="stat"><span>🏆 Danh tiếng</span><b id="repText">0</b></div>
+        <div class="stat"><span>🪑 Bàn</span><b id="tableText">2</b></div>
+        <div class="stat"><span>📦 Kho</span><b id="stockText">20</b></div>
+      </div>
+
+      <div class="section-title">Khách đang chờ</div>
+      <div id="customers" class="customers"></div>
+
+      <div class="section-title">Ca làm việc</div>
+      <div class="action-grid">
+        <button class="primary" onclick="startShift()">▶️ Mở cửa / Tiếp khách</button>
+        <button onclick="serveNext()">🧋 Pha & bán món kế tiếp</button>
+      </div>
+
+      <div id="orderPanel" class="order-panel hidden"></div>
+
+      <div class="section-title">Nhiệm vụ hôm nay</div>
+      <div id="quests" class="quests"></div>
+    </section>
+
+    <section id="staffScreen" class="screen">
+      <div class="page-title"><span>🐾 Pokémon nhân viên</span></div>
+      <p class="muted">Mỗi nhân viên có kỹ năng hỗ trợ quán. Nâng cấp để tăng hiệu quả.</p>
+      <div id="staffList"></div>
+    </section>
+
+    <section id="upgradeScreen" class="screen">
+      <div class="page-title"><span>🏪 Nâng cấp quán</span></div>
+      <div id="upgradeList"></div>
+      <div class="section-title">Menu</div>
+      <div id="menuList"></div>
+    </section>
+
+    <section id="saveScreen" class="screen">
+      <div class="page-title"><span>💾 Dữ liệu</span></div>
+      <div class="save-card">
+        <h3>Lưu game</h3>
+        <p class="muted">Game tự lưu sau mỗi hành động. Bạn cũng có thể lưu thủ công.</p>
+        <button class="primary" onclick="saveGame(true)">💾 Lưu ngay</button>
+        <button onclick="loadGame(true)">↻ Tải lại dữ liệu</button>
+        <button class="danger" onclick="resetGame()">🗑️ Xóa toàn bộ tiến trình</button>
+      </div>
+      <div class="save-card">
+        <h3>Thông tin V1</h3>
+        <p>Phiên bản prototype: quản lý quán, khách hàng, pha chế, tiền, EXP, level, nâng cấp, Pokémon staff và save/load.</p>
+      </div>
+    </section>
+  </main>
+
+  <nav class="bottom-nav">
+    <button class="nav-btn active" data-screen="shopScreen" onclick="showScreen('shopScreen',this)">🏪<span>Quán</span></button>
+    <button class="nav-btn" data-screen="staffScreen" onclick="showScreen('staffScreen',this)">🐾<span>Nhân viên</span></button>
+    <button class="nav-btn" data-screen="upgradeScreen" onclick="showScreen('upgradeScreen',this)">⬆️<span>Nâng cấp</span></button>
+    <button class="nav-btn" data-screen="saveScreen" onclick="showScreen('saveScreen',this)">💾<span>Save</span></button>
+  </nav>
+</div>
+
+<div id="toast"></div>
+<script src="game.js"></script>
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(()=>{}));
+}
+</script>
+</body>
+</html>
